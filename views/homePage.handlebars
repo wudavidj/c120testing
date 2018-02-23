@@ -1,0 +1,174 @@
+<html>
+<head>
+  <title>Home Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="../css/homePage.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery.js"></script>
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-new">
+      <a href="/createNew" style="font-weight: 600">+</a>
+    </div>
+    <div class="navbar-left-most">
+      <div class="dropdown">
+        <button class="dropbtn">ISSUES
+          <i class="fa fa-chevron-down"></i>
+        </button>
+        <div id="dropdown-content">
+          <button class="issueTitle active">Food with Matt</button>
+          <div></div>
+          <button class="issueTitle">Chores with Rinka</button>
+          <div></div>
+
+          <!--
+          <a href="oldIssues/rinka.html">Food with Rinka</a>
+          <a href="oldIssues/rajiv.html">Property with Rajiv</a>
+          <a href="newIssue/index.html">Create New Issue</a>-->
+        </div>
+
+      </div>
+    </div>
+    <div class="navbar-settings">
+      <div class="dropdown">
+        <button class="dropbtn">&#9776;</button>
+        <div id="dropdown-content" style="right:0">
+          <a href="/settings">Settings</a>
+          <a href="/logOut">Log Out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="main-content-area">
+  <a href="/moodLog">
+    <div class="mood">
+      <div class="mood-text-area">
+        <div class="mood-title">RECENT MOOD LOG</div>
+        <div class="mood-current">No Mood Logged</div>
+        <div class="mood-suggestion">Learn More →</div>
+      </div>
+      <div class="mood-icon"></div>
+    </div>
+  </a>
+
+<div class="advice-content-area">
+    <h1 class="heading">Advice</h1>
+    <table>
+      <tr>
+        <td><button class="advice-checkbox"></button></td>
+        <td class="advice-text-box">Don't confront Matt immediately. Make sure to not confront Matt until a few more days have passed.</td>
+      </tr>
+      <tr>
+        <td><button class="advice-checkbox"></button></td>
+        <td class="advice-text-box">Observe Matt's behavior for a few more days, and mark down any additional stolen food.</td>
+      </tr>
+      <tr>
+        <td><button class="advice-checkbox"></button></td>
+        <td class="advice-text-box">After a few days of no additional instances, gently bring up the conversation with Matt.</td>
+      </tr>
+    </table>
+
+<!-- COMMENT OUT JUST FOR WEEK 7 -->
+<!--
+  <div class="question-content-area">
+    <h1>Additional Questions</h1>
+    <div class="question-box">
+      <div class="question-text">What steps have you taken to resolve the issue so far?
+      </div>
+      <div class="question-answers">
+        <button class="question-button">directly communicated
+        </button>
+        <button class="question-button">tried communicating
+        </button>
+        <button class="question-button">nothing yet
+        </button>
+      </div>
+    </div>
+  -->
+    <div class="final-options">
+          <a href="./history">
+          <button class="filled-in">History
+          </button>
+        </a>
+          <div></div>
+          <div class="completed">
+          <button class="not-filled-in" onclick="pop()">Mark Issue as Completed
+          </button>
+        </div>
+        </div>
+
+</div>
+</body>
+<script>
+// Get the container element
+var btnContainer = document.getElementById("dropdown-content");
+
+// Get all buttons with class="btn" inside the container
+var btns = btnContainer.getElementsByClassName("issueTitle");
+
+// Loop through the buttons and add the active class to the current/clicked button
+for (var i = 0; i < btns.length; i++) {
+  // click listener
+  btns[i].addEventListener("click", function() {
+
+  // get the "active" class
+  var current = document.getElementsByClassName("active");
+
+  // turn "active" inactive
+  current[0].className = current[0].className.replace(" active", "");
+
+  // turn clicked class "active"
+  this.className += " active";
+
+  // get the title of new "active" class
+  var newActive = document.getElementsByClassName(" active");
+  localStorage.setItem('selectedIssue', newActive[0].textContent);
+
+  // .html title (needs [0] because newActive is an array)
+  $(".title-sample").html(newActive[0].textContent);
+
+});
+}
+
+  function pop(){
+    alert("You have marked this issue as completed!");
+  }
+  /*
+    $(document).ready(function(){
+      var moodValue = localStorage.getItem('moods');
+      var image = "../images/" + moodValue;
+      $(".mood-icon").append("<img class='pic' src='" + image +"'/>");
+      var moodWord = moodValue.substring(0, moodValue.length - 4);
+      $(".mood-current").html(moodWord);
+*/
+
+  $(document).ready(function(){
+    var moodValue = localStorage.getItem('moods');
+    var moodValueWithoutPNG = moodValue.replace(".png", "_white.png");
+    var image = "../images/" + moodValueWithoutPNG;
+    $(".mood-icon").append("<img class='pic' src='" + image + "'/>");
+      var moodWord = moodValue.substring(0, moodValue.length - 4);
+    $(".mood-current").html(moodWord);
+    var titleVal = localStorage.getItem("newlyCreatedTitle");
+    $("#dropdown-content").append('<a href="/newIssue"><button class="issueTitle">' + titleVal + '</button></a><div></div>');
+     });
+
+
+
+    $(".not-filled-in").click(function(){
+      $(".completed").hide();
+    });
+
+    $(".advice-checkbox").click(function() {
+      $(this).css({"background-color":"#33cc99", "border-color":"white"});
+    });
+
+    $(".question-button").click(function() {
+      $(this).css({"background-color":"#33cc99", "color":"white"});
+    });
+
+
+</script>
+</html>
